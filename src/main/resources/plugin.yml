@@ -1,0 +1,5 @@
+# This is a simple hack for scoreboards in 1.11. It has no preferences.
+
+name: ScoreboardChatHack
+main: io.github.vtcakavsmoace.scoreboardchathack.ScoreboardChatHack
+version: 0.0.1
