@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.vtcakavsmoace</groupId>
 	<artifactId>ScoreboardChatHack</artifactId>
-	<version>0.0.1</version>
+	<version>1.0.0</version>
 	<name>Scoreboard Chat Hack</name>
 	<description>A hack that allows for standard vanilla display of the chat as defined by the scoreboard.</description>
 	<build>
