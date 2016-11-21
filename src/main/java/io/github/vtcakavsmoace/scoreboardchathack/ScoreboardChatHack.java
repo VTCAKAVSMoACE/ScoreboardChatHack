@@ -48,18 +48,18 @@ public final class ScoreboardChatHack extends JavaPlugin implements Listener {
 	 * EventHandler for when a player uses Chat. This will cancel their message
 	 * and replace it with a tellraw.
 	 */
-	@EventHandler(priority = EventPriority.LOW)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
+		if (event.isCancelled())
+			return;
 		Player player = event.getPlayer();
-
-		event.setCancelled(true);
-
-		getServer().dispatchCommand(Bukkit.getConsoleSender(),
-				"tellraw @a [{\"text\":\"<\"},{\"selector\":\"@p[name=" + player.getName() + "]\"},{\"text\":\"> "
-						+ StringEscapeUtils.escapeJavaScript(event.getMessage()) + "\"}]");
-
-		getLogger().info("<" + player.getName() + "> " + event.getMessage());
-
+		if (!event.isCancelled()) {
+			event.setCancelled(true);
+			getServer().dispatchCommand(Bukkit.getConsoleSender(),
+					"tellraw @a [{\"text\":\"<\"},{\"selector\":\"@p[name=" + player.getName() + "]\"},{\"text\":\"> "
+							+ StringEscapeUtils.escapeJavaScript(event.getMessage()) + "\"}]");
+			getLogger().info("<" + player.getName() + "> " + event.getMessage());
+		}
 	}
 
 }
