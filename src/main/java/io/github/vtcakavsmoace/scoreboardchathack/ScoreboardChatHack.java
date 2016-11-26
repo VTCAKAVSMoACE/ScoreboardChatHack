@@ -1,14 +1,13 @@
 package io.github.vtcakavsmoace.scoreboardchathack;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.bukkit.scoreboard.Team;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 /* This program is free software. It comes without any warranty, to
  * the extent permitted by applicable law. You can redistribute it
@@ -43,23 +42,12 @@ public final class ScoreboardChatHack extends JavaPlugin implements Listener {
 		HandlerList.unregisterAll((Listener) this);
 		getLogger().info("ScoreboardChatHack killed.");
 	}
-
-	/**
-	 * EventHandler for when a player uses Chat. This will cancel their message
-	 * and replace it with a tellraw.
-	 */
+	
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPlayerChat(AsyncPlayerChatEvent event) {
-		if (event.isCancelled())
-			return;
-		Player player = event.getPlayer();
-		if (!event.isCancelled()) {
-			event.setCancelled(true);
-			getServer().dispatchCommand(Bukkit.getConsoleSender(),
-					"tellraw @a [{\"text\":\"<\"},{\"selector\":\"@p[name=" + player.getName() + "]\"},{\"text\":\"> "
-							+ StringEscapeUtils.escapeJavaScript(event.getMessage()) + "\"}]");
-			getLogger().info("<" + player.getName() + "> " + event.getMessage());
-		}
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		String playerName = event.getPlayer().getName();
+		Team playerTeam = Bukkit.getScoreboardManager().getMainScoreboard().getEntryTeam(playerName);
+		event.getPlayer().setDisplayName(playerTeam.getPrefix() + playerName + playerTeam.getSuffix());
 	}
 
 }
